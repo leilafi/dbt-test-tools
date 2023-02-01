@@ -8,8 +8,9 @@ const data = fs
 let dataLines = data.toString().split("\n");
 
 let fields = [];
+let keys = [];
 
-// This loop creates an array of the fields description. Remove tabs. We start from index=1 because the first item is the actual table name
+// Creates an array of the fields description. Remove tabs. Starting from index=1 because the first item is the table name
 for (let index = 1; index < dataLines.length; index++) {
   const field = dataLines[index];
   field.toString().replace("\t", "");
@@ -17,8 +18,12 @@ for (let index = 1; index < dataLines.length; index++) {
 }
 
 let columnsType = tableSchema(fields);
+let keysLine = fields[fields.length - 2];
 
 testExpectedColumns();
+
+tableKeys(keysLine);
+testUniqueColumns();
 
 testExpectedColumnTypes();
 
@@ -41,6 +46,10 @@ function tableSchema(fields) {
       });
   }
   return arraySchema;
+}
+
+function tableKeys(keysLine) {
+  keys.push(keysLine.split("(")[1].split(")")[0]);
 }
 
 function listTableColumns(array) {
@@ -82,4 +91,12 @@ function testExpectedColumnTypes() {
   }
 }
 
-function testUniqueColumns() {}
+function testUniqueColumns() {
+  console.log("\n\n# Generating tests for primary keys:\n\n");
+  let expect_compound_columns_to_be_unique =
+    "  - dbt_expectations.expect_compound_columns_to_be_unique:\n\t" +
+    "column_list: [" +
+    keys +
+    "]";
+  console.log(expect_compound_columns_to_be_unique);
+}
