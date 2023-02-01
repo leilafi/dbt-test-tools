@@ -42,8 +42,8 @@ function tableSchema(fields) {
         type: fieldData.split(" ")[1].split("(")[0],
       });
     }
-    // ie FLOAT,
     else
+    // ie FLOAT,
       arraySchema.push({
         name: '"' + fieldData.split(" ")[0] + '"',
         type: fieldData.split(" ")[1].split(",")[0],
