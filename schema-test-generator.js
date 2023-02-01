@@ -34,18 +34,19 @@ function tableSchema(fields) {
   // Returns a distionary of column names and their type
   for (let i = 0; i < fields.length - 2; i++) {
     var fieldData = fields[i];
-    if (
-      fieldData.split(" ")[1] === "BOOLEAN," ||
-      fieldData.split(" ")[1] === "VARIANT,"
-    ) {
-      arraySchema.push({
-        name: '"' + fieldData.split(" ")[0] + '"',
-        type: fieldData.split(" ")[1].split(",")[0],
-      });
-    } else
+
+    if (fieldData.includes("(")) {
+      // ie VARCHAR(256)
       arraySchema.push({
         name: '"' + fieldData.split(" ")[0] + '"',
         type: fieldData.split(" ")[1].split("(")[0],
+      });
+    }
+    // ie FLOAT,
+    else
+      arraySchema.push({
+        name: '"' + fieldData.split(" ")[0] + '"',
+        type: fieldData.split(" ")[1].split(",")[0],
       });
     // Create a list of not null columns
     if (fieldData.includes("NOT NULL")) {
