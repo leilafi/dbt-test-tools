@@ -47,10 +47,10 @@ function tableSchema(fields) {
         name: '"' + fieldData.split(" ")[0] + '"',
         type: fieldData.split(" ")[1].split("(")[0],
       });
-      // Create a list of not null columns
-      if (fieldData.includes("NOT NULL")) {
-        notNulls.push(fieldData.split(" ")[0])
-      }
+    // Create a list of not null columns
+    if (fieldData.includes("NOT NULL")) {
+      notNulls.push(fieldData.split(" ")[0]);
+    }
   }
   return arraySchema;
 }
@@ -95,14 +95,13 @@ function testExpectedColumnTypes() {
       "column_type: " +
       arraySchema[index].type;
     console.log(expect_column_values_to_be_of_type);
-    
+
     // Generating tests for not null columns
     if (notNulls.includes(arraySchema[index].name.split('"')[1])) {
       let expect_column_values_to_not_be_null =
-      "  - dbt_expectations.expect_column_values_to_not_be_null\n"
+        "  - dbt_expectations.expect_column_values_to_not_be_null\n";
       console.log(expect_column_values_to_not_be_null);
     }
-    
   }
 }
 
