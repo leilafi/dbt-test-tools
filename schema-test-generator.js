@@ -80,27 +80,28 @@ function testExpectedColumns() {
     "column_list: [" +
     listTableColumns(columnsType) +
     "]";
-  console.log(expect_table_columns_to_match_ordered_list);
+  console.log("tests:\n\t" + expect_table_columns_to_match_ordered_list);
 }
 
 function testExpectedColumnTypes() {
   // Generate tests for expected type of a column
   console.log("\n\n# Generating tests for expected types of the columns:\n\n");
+  // console.log("columns:")
   for (let index = 0; index < arraySchema.length; index++) {
     let expect_column_values_to_be_of_type =
       "- name: " +
       arraySchema[index].name +
       "\n" +
       "  tests:\n" +
-      "  - dbt_expectations.expect_column_values_to_be_of_type:\n\t" +
-      "column_type: " +
+      "  - dbt_expectations.expect_column_values_to_be_of_type:\n" +
+      "      column_type: " +
       arraySchema[index].type;
     console.log(expect_column_values_to_be_of_type);
 
     // Generating tests for not null columns
     if (notNulls.includes(arraySchema[index].name.split('"')[1])) {
       let expect_column_values_to_not_be_null =
-        "  - dbt_expectations.expect_column_values_to_not_be_null\n";
+        "  - dbt_expectations.expect_column_values_to_not_be_null";
       console.log(expect_column_values_to_not_be_null);
     }
   }
@@ -110,7 +111,7 @@ function testUniqueColumns() {
   console.log("\n\n# Generating tests for primary keys:\n\n");
   let expect_compound_columns_to_be_unique =
     "- dbt_expectations.expect_compound_columns_to_be_unique:\n\t" +
-    "column_list: [" +
+    "\tcolumn_list: [" +
     keys +
     "]";
   console.log(expect_compound_columns_to_be_unique);
