@@ -27,7 +27,8 @@ console.log("Generating the test for expected columns of a table...\n");
 console.log("Generating tests for primary keys...\n");
 
 testExpectedColumns();
-
+testFreshnessDaily();
+testVolumeAnomaly();
 tableKeys(keysLine);
 testUniqueColumns();
 
@@ -98,7 +99,9 @@ function testExpectedColumnTypes() {
       "  tests:\n" +
       "  - dbt_expectations.expect_column_values_to_be_of_type:\n" +
       "      column_type: " +
-      arraySchema[index].type;
+      arraySchema[index].type + "\n"
+      "      config:\n" +
+      "      severity: warn;\n"
     console.log(expect_column_values_to_be_of_type);
 
     // Generating tests for not null columns
@@ -117,5 +120,22 @@ function testUniqueColumns() {
     keys +
     "]";
   console.log(expect_compound_columns_to_be_unique);
-  console.log('       row_condition: "_LINE > 0" ')
+}
+
+function testFreshnessDaily() {
+  let daily_freshness = 
+  "   - elementary.freshness_anomalies:\n" +
+  "       timestamp_column: _FIVETRAN_SYNCED\n" +
+  "       time_bucket:\n" +
+  "           period: hour\n" +
+  "           count: 35"
+  console.log(daily_freshness)
+}
+
+function testVolumeAnomaly(){
+  let volume_anomaly =
+    "   - elementary.volume_anomalies:\n" +
+    "       timestamp_column: _FIVETRAN_SYNCED\n"
+  console.log(volume_anomaly)
+
 }
