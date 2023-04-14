@@ -6,7 +6,7 @@ const data = fs
   .toString();
 
 let dataLines = data.toString().split("\n");
-
+let tableName = dataLines[0].split("TABLE")[1].split("(")[0]
 let fields = [];
 let keys = [];
 let notNulls = [];
@@ -22,8 +22,13 @@ let columnsType = tableSchema(fields);
 let keysLine = fields[fields.length - 2];
 
 // Table level tests
-testExpectedColumns();
+console.log("For table: " + tableName + "\n")
+console.log("Generating the test for expected columns of a table...\n");
+console.log("Generating tests for primary keys...\n");
 
+testExpectedColumns();
+testFreshnessDaily();
+testVolumeAnomaly();
 tableKeys(keysLine);
 testUniqueColumns();
 
@@ -73,45 +78,64 @@ function listTableColumns(array) {
 
 function testExpectedColumns() {
   // Generate test for expected columns of a table
-  console.log("\n\n# Generating the test for expected columns of a table:\n\n");
   let expect_table_columns_to_match_ordered_list =
     "- dbt_expectations.expect_table_columns_to_match_ordered_list:" +
-    "\n\t" +
-    "column_list: [" +
+    "\n " +
+    "     column_list: [" +
     listTableColumns(columnsType) +
     "]";
-  console.log(expect_table_columns_to_match_ordered_list);
+  console.log("tests:\n   " + expect_table_columns_to_match_ordered_list);
 }
 
 function testExpectedColumnTypes() {
   // Generate tests for expected type of a column
-  console.log("\n\n# Generating tests for expected types of the columns:\n\n");
+  // console.log("\n\n# Generating tests for expected types of the columns:\n\n");
+  console.log("columns:")
   for (let index = 0; index < arraySchema.length; index++) {
     let expect_column_values_to_be_of_type =
       "- name: " +
       arraySchema[index].name +
       "\n" +
       "  tests:\n" +
-      "  - dbt_expectations.expect_column_values_to_be_of_type:\n\t" +
-      "column_type: " +
-      arraySchema[index].type;
+      "  - dbt_expectations.expect_column_values_to_be_of_type:\n" +
+      "      column_type: " +
+      arraySchema[index].type + "\n"
+      "      config:\n" +
+      "      severity: warn;\n"
     console.log(expect_column_values_to_be_of_type);
 
     // Generating tests for not null columns
     if (notNulls.includes(arraySchema[index].name.split('"')[1])) {
       let expect_column_values_to_not_be_null =
-        "  - dbt_expectations.expect_column_values_to_not_be_null\n";
+        "  - dbt_expectations.expect_column_values_to_not_be_null";
       console.log(expect_column_values_to_not_be_null);
     }
   }
 }
 
 function testUniqueColumns() {
-  console.log("\n\n# Generating tests for primary keys:\n\n");
   let expect_compound_columns_to_be_unique =
-    "- dbt_expectations.expect_compound_columns_to_be_unique:\n\t" +
-    "column_list: [" +
+    "   - dbt_expectations.expect_compound_columns_to_be_unique:\n" +
+    "       column_list: [" +
     keys +
     "]";
   console.log(expect_compound_columns_to_be_unique);
+}
+
+function testFreshnessDaily() {
+  let daily_freshness = 
+  "   - elementary.freshness_anomalies:\n" +
+  "       timestamp_column: _FIVETRAN_SYNCED\n" +
+  "       time_bucket:\n" +
+  "           period: hour\n" +
+  "           count: 35"
+  console.log(daily_freshness)
+}
+
+function testVolumeAnomaly(){
+  let volume_anomaly =
+    "   - elementary.volume_anomalies:\n" +
+    "       timestamp_column: _FIVETRAN_SYNCED\n"
+  console.log(volume_anomaly)
+
 }
