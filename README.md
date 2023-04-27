@@ -75,7 +75,6 @@ $ cd dbt-tools
 # Install dependencies
 $ yarn
 
-
 $ Create a table.sql under DBT-TOOLS
 
 $ Copy the table description from Snowflake to table.sql
