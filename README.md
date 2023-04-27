@@ -46,23 +46,18 @@
 
 ## :dart: About ##
 
-Describe your project
+This is a tool to generate Elementary tests for data sources. Input of the tool is a Snowflake table description and output of the tool is a series of Elementary schema, freshness and volume anomaly tests.
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Saves time on adding Elementary tests for Snowflake tables;\
 
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
 - [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [Elementary](https://docs.elementary-data.com/introduction)
 
 ## :white_check_mark: Requirements ##
 
@@ -84,11 +79,20 @@ $ yarn
 $ yarn start
 
 # The server will initialize in the <http://localhost:3000>
+
+# Create a file for table desctiption
+$ Create a table.sql under DBT-TOOLS
+
+# Copy the table description from Snowflake to table.sql
+$ Copy the table description from Snowflake to table.sql
+
+# Generate tests
+$ node schema-test-generator.js
+
+
+
 ```
 
-## :memo: License ##
-
-This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
 
 
 Made with :heart: by <a href="https://github.com/{{YOUR_GITHUB_USERNAME}}" target="_blank">{{YOUR_NAME}}</a>
