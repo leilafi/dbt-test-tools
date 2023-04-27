@@ -67,7 +67,7 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 
 ```bash
 # Clone this project
-$ git clone https://github.com/{{YOUR_GITHUB_USERNAME}}/dbt-tools
+$ git clone https://github.com/leilafi/dbt-tools
 
 # Access
 $ cd dbt-tools
@@ -88,7 +88,7 @@ $ node schema-test-generator.js
 
 
 
-Made with :heart: by <a href="https://github.com/{{YOUR_GITHUB_USERNAME}}" target="_blank">{{YOUR_NAME}}</a>
+Made with :heart: by <a href="https://github.com/leilafi target="_blank">Leila Firouz</a>
 
 &#xa0;
 
