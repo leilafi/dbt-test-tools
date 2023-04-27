@@ -70,11 +70,11 @@ $ git clone https://github.com/leilafi/dbt-tools
 $ cd dbt-tools
 
 # Install dependencies
-$ yarn
+$ npm i
 
-$ Create a table.sql under DBT-TOOLS
+Create a table.sql under DBT-TOOLS
 
-$ Copy the table description from Snowflake to table.sql
+Copy the description of the table which you want to generate tests for from Snowflake to table.sql
 
 # Generate tests
 $ node schema-test-generator.js
