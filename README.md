@@ -88,7 +88,7 @@ $ node schema-test-generator.js
 
 
 
-Made with :heart: by <a href="https://github.com/leilafi target="_blank">Leila Firouz</a>
+Made with :heart: by <a href="https://github.com/leilafi>Leila Firouz</a>
 
 &#xa0;
 
