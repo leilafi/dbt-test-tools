@@ -75,15 +75,9 @@ $ cd dbt-tools
 # Install dependencies
 $ yarn
 
-# Run the project
-$ yarn start
 
-# The server will initialize in the <http://localhost:3000>
-
-# Create a file for table desctiption
 $ Create a table.sql under DBT-TOOLS
 
-# Copy the table description from Snowflake to table.sql
 $ Copy the table description from Snowflake to table.sql
 
 # Generate tests
