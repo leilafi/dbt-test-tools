@@ -27,13 +27,14 @@ console.log("Generating the test for expected columns of a table...\n");
 console.log("Generating tests for primary keys...\n");
 
 testExpectedColumns();
+testdbtFreshnessDaily();
 testFreshnessDaily();
 testVolumeAnomaly();
 tableKeys(keysLine);
 testUniqueColumns();
 
 // Column level tests
-testExpectedColumnTypes();
+// testExpectedColumnTypes();
 
 function tableSchema(fields) {
   // Returns a distionary of column names and their type
@@ -131,6 +132,16 @@ function testFreshnessDaily() {
   "           count: 35"
   console.log(daily_freshness)
 }
+
+function testdbtFreshnessDaily() {
+  let dbt_daily_freshness = 
+  "   - dbt_expectations.expect_grouped_row_values_to_have_recent_data:\n" +
+  "       timestamp_column: _FIVETRAN_SYNCED\n" +
+  "       datepart: day\n" +
+  "       interval: 1\n"
+  console.log(dbt_daily_freshness)
+}
+
 
 function testVolumeAnomaly(){
   let volume_anomaly =
